@@ -6,7 +6,6 @@ def iterate(fn, x0, T, args=()):
     
     Parameters
     ----------
-
     fn : function
         A function that takes a single argument
     x0 : float
@@ -18,13 +17,11 @@ def iterate(fn, x0, T, args=()):
 
     Return
     ------
-
     orbit - list
         The orbit/itinerary
 
-    Examples/Tests
-    --------------
-
+    Examples
+    --------
     >>> # The fixed points
     >>> iterate(lambda x: (2.5*x)*(1-x), 0.6, 20)
     >>> iterate(lambda x: (2.5*x)*(1-x), 0, 20)
@@ -141,18 +138,17 @@ def fixed_point(fn, x0, args=(), xtol=1e-8, maxiter=500):
     raise RuntimeError(msg)
 
 
-def is_stable(fn, xfix, dx, args=(), xtol=1e-4, maxiter=500):
+def is_stable(fn, xfix, ep, args=(), xtol=1e-4, maxiter=500):
     """Is fn stable on the (plus, minus) sides of xfix?
 
     Parameters
     ----------
-
     fn : function
         A function that takes a single argument
     xfix : float
         The fixed point 
-    dx : float
-        Amount to preturb xfix by
+    ep : float
+        The neighborhood to search for stability (ep > 0)
     args : tuple, optional
         Extra arguments to `fn`.
     xtol : float, optional
@@ -161,16 +157,24 @@ def is_stable(fn, xfix, dx, args=(), xtol=1e-4, maxiter=500):
         Maximum number of iterations, defaults to 500.
     """
 
+    if ep < 0:
+        raise ValueError("ep must be positive")
+
     p = False
     m = False
 
-    xp = iterate(fn, xfix + dx, maxiter, *args)[-1]
-    xm = iterate(fn, xfix - dx, maxiter, *args)[-1]
-        ## Save only the last element
+    xps = []
+    xms = []
+    search_range = np.arange(0.01, ep, ep/10)
+    for ep_x in search_range:
+        xp = iterate(fn, xfix + ep_x, maxiter, *args)[-1]
+        xm = iterate(fn, xfix - ep_x, maxiter, *args)[-1] ## Save last x
+        xps.append(xp)
+        xms.append(xm)
 
-    if abs(xp - xfix) < xtol:
+    if np.all(np.abs(xps - xfix) < xtol):
         p = True
-    if abs(xm - xfix) < xtol:
+    if np.all(np.abs(xpm - xfix) < xtol):
         m = True
 
     return (p, m)
