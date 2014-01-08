@@ -180,11 +180,4 @@ def phase_diagram(fn, xfix=()):
     
     raise NotImplementedError("TODO")
 
-    fixed = find_fixed(fn)
-    for fix in fixed:
-        if is_stable(fn, fix):
-            pass
-        elif is_unstable(fn, fix):
-            pass    
-    pass
-
+    
