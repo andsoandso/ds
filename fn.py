@@ -176,7 +176,7 @@ def is_stable(fn, xfix, ep, args=(), xtol=1e-4, maxiter=500):
 
 
 def phase_diagram(fn, xfix=()):
-    """Display as a (text) phase diagram"""
+    """Display a (text) phase diagram"""
     
     raise NotImplementedError("TODO")
 
