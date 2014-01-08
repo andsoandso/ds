@@ -65,7 +65,7 @@ def fixed_point(fn, x0, args=(), xtol=1e-8, maxiter=500):
     `http://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.fixed_point.html#scipy.optimize.fixed_point`
 
     I didn't want a full scipy dependency, instead this requires only
-    numpy.  I'd like to remove even that eventually.
+    numpy.
     ----
 
 
