@@ -160,9 +160,6 @@ def is_stable(fn, xfix, ep, args=(), xtol=1e-4, maxiter=500):
     if ep < 0:
         raise ValueError("ep must be positive")
 
-    p = False
-    m = False
-
     xps = []
     xms = []
     search_range = np.arange(0.01, ep, ep/10)
@@ -172,10 +169,8 @@ def is_stable(fn, xfix, ep, args=(), xtol=1e-4, maxiter=500):
         xps.append(xp)
         xms.append(xm)
 
-    if np.all(np.abs(xps - xfix) < xtol):
-        p = True
-    if np.all(np.abs(xpm - xfix) < xtol):
-        m = True
+    p = np.all(np.abs(xps - xfix) < xtol)
+    m = np.all(np.abs(xpm - xfix) < xtol)
 
     return (p, m)
 
