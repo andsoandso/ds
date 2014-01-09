@@ -7,6 +7,8 @@ To install download the zip of this code to somewhere on your python path, or li
 
 This code requires [numpy](http://www.numpy.org/) which can be (easily) installed for most if not all major platforms, see [here](http://www.scipy.org/scipylib/download.html) for the details.
 
+This module in know to work on OS 10.9, python 2.7.4, numpy 1.6.1, but should work on any unix-like system just fine.  Let me know if that is not the case.  If you use windows, well, I'd take patches but have no interesting in testing or supporting.  Windows, well, it just makes me sad.
+
 Intro
 =====
 
