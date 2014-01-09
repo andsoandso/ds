@@ -170,7 +170,7 @@ def is_stable(fn, xfix, ep, args=(), xtol=1e-4, maxiter=500):
         xms.append(xm)
 
     p = np.all(np.abs(np.asarray(xps) - xfix) < xtol)
-    m = np.all(np.abs(np.asarray(xpm) - xfix) < xtol)
+    m = np.all(np.abs(np.asarray(xms) - xfix) < xtol)
 
     return (p, m)
 
