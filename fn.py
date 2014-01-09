@@ -7,7 +7,7 @@ def iterate(fn, x0, T, args=()):
     Parameters
     ----------
     fn : function
-        A function that takes a single argument
+        A function whose first argument is x
     x0 : float
         Initial condition/seed 
     T : int
@@ -77,7 +77,7 @@ def fixed_point(fn, x0, args=(), xtol=1e-8, maxiter=500):
     Parameters
     ----------
     fn : function
-        Function to evaluate.
+        A function whose first argument is x
     x0 : array_like
         Fixed point of function.
     args : tuple, optional
@@ -175,7 +175,7 @@ def is_stable(fn, xfix, ep, args=(), xtol=1e-4, maxiter=500):
     return (p, m)
 
 
-def phase_diagram(xfix=(), xstable=(), size=80, offset=10):
+def phase_diagram(xfix=(), xstable=(), size=60, offset=12):
     """Display a (text) phase diagram"""
     
     n = len(xfix)
@@ -189,22 +189,41 @@ def phase_diagram(xfix=(), xstable=(), size=80, offset=10):
     if len(xfix) != len(xstable):
         raise ValueError("xfix and xstable must have same number of elements")
 
+    if offset/float(size) < 0.1:
+        raise ValueError("offset must be 10 percent of size")
+
+    if offset/float(size) > 0.25:
+        raise ValueError("offset can be not more than 25 percent of size")
+
+    if offset < 2:
+        raise ValueError("offset must be > 2")        
+
     # Init a phase line 
     # and its annotations
     line = ["-", ] * size
     annote = [" ", ] * size
 
     # Add fixed points
-    for i, xf in zip(range(offset, size-offset, (size - 2*offset)/n), xfix):
+    steps = range(offset, size-offset, (size - 2*offset)/n)
+    for i, xf in zip(steps, xfix):
         line[i] = "*"
         annote[i] = str(xf)
 
     # Add stablity arrows
-    # TODO 
-    
+    for i in range(len(xstable)):
+        s = steps[i]
+        xsb = xstable[i]
+
+        downside = s - int(offset/2)
+        upside = s + int(offset/2)
+
+        if xsb[0]:
+            line[downside] = ">"
+        if xsb[1]:
+            line[upside] = "<"
+
+    # Print the phase diagram
     print("\n")
     print(''.join(line))
     print(''.join(annote))
     
-    
-
