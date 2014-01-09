@@ -222,9 +222,9 @@ def phase_diagram(xfix=(), xstable=(), size=60, offset=12):
 
     # Add fixed points
     steps = range(offset, size-offset, (size - 2*offset)/n)
-    for i, xf in zip(steps, xfix):
-        line[i] = "*"
-        annote[i] = str(xf)
+    for s, xf in zip(steps, xfix):
+        line[s] = "*"
+        annote[s] = str(xf)
 
     # Add stablity arrows
     for i in range(len(xstable)):
