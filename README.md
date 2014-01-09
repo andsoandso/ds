@@ -37,7 +37,7 @@ Iterate our function
         >>> iterate(lambda x: (2.5*x)*(1-x), -.1, 5)
         [-0.275, -0.8765624999999999, -4.1123107910156245, -52.558527082297935, -7037.393240357359] 
 
-    Find the fixed pointsi seeding from [-1, -.1, 0.01, .5, 1].
+Find the fixed pointsi seeding from [-1, -.1, 0.01, .5, 1].
 
         >>> from ds.fn import fixed_points
         >>> set(dis.fn.fixed_point(lambda x: (2.5*x)*(1-x), [-1, -.1, 0.01, .5, 1]))
