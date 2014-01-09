@@ -3,9 +3,9 @@ ds
 
 A python module for dynamical systems analysis.  It's for learning not for real work.
 
-To install download the zip of this code to somewhere on yout python path, or likewise `git clone https://github.com/andsoandso/ds.git` into your python path.
+To install download the zip of this code to somewhere on your python path, or likewise `git clone https://github.com/andsoandso/ds.git` into your python path.
 
-This code requires [numpy](http://www.numpy.org/) which can be (easily) installed for most if not all major pltforms, see [here](http://www.scipy.org/scipylib/download.html) for the details.
+This code requires [numpy](http://www.numpy.org/) which can be (easily) installed for most if not all major platforms, see [here](http://www.scipy.org/scipylib/download.html) for the details.
 
 Intro
 =====
@@ -35,19 +35,19 @@ Iterate our function
         >>> iterate(lambda x: (2.5*x)*(1-x), -.1, 5)
         [-0.275, -0.8765624999999999, -4.1123107910156245, -52.558527082297935, -7037.393240357359] 
 
-Find the fixed points.
+Find the fixed pointsi seeding from [-1, -.1, 0.01, .5, 1].
 
         >>> from ds.fn import fixed_points
         >>> set(dis.fn.fixed_point(lambda x: (2.5*x)*(1-x), [-1, -.1, 0.01, .5, 1]))
         set([0.0, 0.60000000000000009])
 
-Are they stable (within a neighborhood of 0.1?
+Are they stable (within a neighborhood of 0.1)?
         
         >>> from ds.fn import is_stable
-        >>> is_stable(lambda x: (2.5*x)*(1-x), 0, .1)
+        >>> is_stable(lambda x: (2.5*x)*(1-x), 0, 0.1)
         (False, False)
 
-        >>> is_stable(lambda x: (2.5*x)*(1-x), 0, .1)
+        >>> is_stable(lambda x: (2.5*x)*(1-x), 0, 0.1)
         (True, True)
 
 Print a pretty phase diagrami to the console.
