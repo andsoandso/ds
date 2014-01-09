@@ -193,10 +193,10 @@ def phase_diagram(xfix=(), xstable=(), size=60, offset=12):
         raise ValueError("offset must be 10 percent of size")
 
     if offset/float(size) > 0.25:
-        raise ValueError("offset can be not more than 25 percent of size")
+        raise ValueError("offset must be less then 25 percent of size")
 
-    if offset < 2:
-        raise ValueError("offset must be > 2")        
+    if offset < 1:
+        raise ValueError("offset must be > 1")        
 
     # Init a phase line 
     # and its annotations
