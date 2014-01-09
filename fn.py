@@ -176,7 +176,19 @@ def is_stable(fn, xfix, ep, args=(), xtol=1e-4, maxiter=500):
 
 
 def phase_diagram(xfix=(), xstable=(), size=60, offset=12):
-    """Display a (text) phase diagram"""
+    """Display a (text) phase diagram
+
+    Parameters
+    ---------
+    xfix : tuple
+        The fixed points
+    xstable : tuple (of tuples)
+        Boolean stability tuples (from is_stable())
+    size : int (size < 20)
+        Width of the line in charaters
+    offset : int (offset > 2; size*.1 < offset < size*.25)
+        Min/max offset of fixed points on the line
+    """
     
     n = len(xfix)
     xfix = list(xfix)
@@ -188,6 +200,11 @@ def phase_diagram(xfix=(), xstable=(), size=60, offset=12):
 
     if len(xfix) != len(xstable):
         raise ValueError("xfix and xstable must have same number of elements")
+
+    # Set some (hopefully) sane display limits
+
+    if size < 20:
+        raise ValueError("size must be greater than 20")
 
     if offset/float(size) < 0.1:
         raise ValueError("offset must be 10 percent of size")
