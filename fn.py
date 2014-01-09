@@ -175,9 +175,36 @@ def is_stable(fn, xfix, ep, args=(), xtol=1e-4, maxiter=500):
     return (p, m)
 
 
-def phase_diagram(fn, xfix=()):
+def phase_diagram(xfix=(), xstable=(), size=80, offset=10):
     """Display a (text) phase diagram"""
     
-    raise NotImplementedError("TODO")
+    n = len(xfix)
+    xfix = list(xfix)
+    xstable = list(xstable)
 
+    if n < 1:
+        print("No fixed points")
+        return None
+
+    if len(xfix) != len(xstable):
+        raise ValueError("xfix and xstable must have same number of elements")
+
+    # Init a phase line 
+    # and its annotations
+    line = ["-", ] * size
+    annote = [" ", ] * size
+
+    # Add fixed points
+    for i, xf in zip(range(offset, size-offset, (size - 2*offset)/n), xfix):
+        line[i] = "*"
+        annote[i] = str(xf)
+
+    # Add stablity arrows
+    # TODO 
     
+    print("\n")
+    print(''.join(line))
+    print(''.join(annote))
+    
+    
+
