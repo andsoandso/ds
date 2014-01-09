@@ -236,8 +236,22 @@ def phase_diagram(xfix=(), xstable=(), size=60, offset=12):
 
         if xsb[0]:
             line[downside] = ">"
+        elif not xsb[0]:
+            # If were on step 0, or
+            # the last iters xstable
+            # was false, print the 
+            # unstable arrow
+            if i == 0:
+                line[downside] = "<"
+            elif not xstable[i-1][1]:
+                line[downside] = "<"
+
         if xsb[1]:
             line[upside] = "<"
+        elif not xsb[1]:
+            # Are we on the end?
+            if i == len(xstable)-1:
+                line[upside] = ">"
 
     # Print the phase diagram
     print("\n")
