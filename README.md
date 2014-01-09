@@ -54,7 +54,8 @@ Are they stable (within a neighborhood of 0.1)?
 
 Print a pretty phase diagram to the console.
 
-        >>> ds.fn.phase_diagram((0,.6), ((False, False), (True, True)))
+        >>> from ds.fn import phase_diagram
+        >>> phase_diagram((0,.6), ((False, False), (True, True)))
 
         ------<-----*----------->-----*-----<-----------------------
                     0                 0.6
