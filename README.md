@@ -50,7 +50,7 @@ Are they stable (within a neighborhood of 0.1)?
         >>> is_stable(lambda x: (2.5*x)*(1-x), 0, 0.1)
         (True, True)
 
-Print a pretty phase diagrami to the console.
+Print a pretty phase diagram to the console.
 
         >>> ds.fn.phase_diagram((0,.6), ((False, False), (True, True)))
 
