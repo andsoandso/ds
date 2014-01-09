@@ -184,7 +184,7 @@ def phase_diagram(xfix=(), xstable=(), size=60, offset=12):
         The fixed points
     xstable : tuple (of tuples)
         Boolean stability tuples (from is_stable())
-    size : int (size < 20)
+    size : int (size > 20)
         Width of the line in charaters
     offset : int (offset > 2; size*.1 < offset < size*.25)
         Min/max offset of fixed points on the line
