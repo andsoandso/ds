@@ -3,9 +3,9 @@ ds
 
 A python module for dynamical systems analysis.  It's for learning not for real work.
 
-To install download the zip of this code to somewhere on your python path, or likewise `git clone https://github.com/andsoandso/ds.git` into your python path.
+To install download the zip of this code to somewhere on your python path, or likewise `git clone https://github.com/andsoandso/ds.git` into your python path. As it is undergoing frequent updates, the git solution is the convenient one.
 
-This code requires [numpy](http://www.numpy.org/) which can be (easily) installed for most if not all major platforms, see [here](http://www.scipy.org/scipylib/download.html) for the details.  This module is under going frequent updates, making the git solution the convenient one.
+This code requires [numpy](http://www.numpy.org/) which can be (easily) installed for most if not all major platforms, see [here](http://www.scipy.org/scipylib/download.html) for the details.  
 
 ---
 
