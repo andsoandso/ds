@@ -47,7 +47,7 @@ def iterate(fn, x0, T, args=()):
     """
     
     # Initialize the orbit with x0
-    orbit = [fn(float(x0), *args), ]
+    orbit = [x0, fn(float(x0), *args)]
     
     # Iterate until t == T
     for t in range(1, int(T)):
@@ -197,26 +197,20 @@ def phase_diagram(xfix=(), xstable=(), size=60, offset=12):
     if n < 1:
         print("No fixed points")
         return None
-
+    
+    # Set some (hopefully) sane display limits
     if len(xfix) != len(xstable):
         raise ValueError("xfix and xstable must have same number of elements")
-
-    # Set some (hopefully) sane display limits
-
     if size < 20:
         raise ValueError("size must be greater than 20")
-
     if offset/float(size) < 0.1:
         raise ValueError("offset must be 10 percent of size")
-
     if offset/float(size) > 0.25:
         raise ValueError("offset must be less then 25 percent of size")
-
     if offset < 1:
         raise ValueError("offset must be > 1")        
 
-    # Init a phase line 
-    # and its annotations
+    # Init a phase linees and its annotations
     line = ["-", ] * size
     annote = [" ", ] * size
 
@@ -234,18 +228,15 @@ def phase_diagram(xfix=(), xstable=(), size=60, offset=12):
         downside = s - int(offset/2)
         upside = s + int(offset/2)
 
+        # Plus side
         if xsb[0]:
             line[downside] = ">"
         elif not xsb[0]:
-            # If were on step 0, or
-            # the last iters xstable
-            # was false, print the 
-            # unstable arrow
-            if i == 0:
-                line[downside] = "<"
-            elif not xstable[i-1][1]:
+            # First step or last has no arrow?
+            if (i == 0) or (not xstable[i-1][1]):
                 line[downside] = "<"
 
+        # Minus side
         if xsb[1]:
             line[upside] = "<"
         elif not xsb[1]:
@@ -253,7 +244,6 @@ def phase_diagram(xfix=(), xstable=(), size=60, offset=12):
             if i == len(xstable)-1:
                 line[upside] = ">"
 
-    # Print the phase diagram
     print("\n")
     print(''.join(line))
     print(''.join(annote))
