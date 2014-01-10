@@ -11,7 +11,7 @@ def iterate(fn, x0, T, args=()):
     x0 : float
         Initial condition/seed 
     T : int
-        The number of iterations to return   
+        The number of iterations to calculate   
     args : tuple, optional
         Extra arguments to `fn`.
 
@@ -46,7 +46,7 @@ def iterate(fn, x0, T, args=()):
     >>> assert len(ds.fn.iterate(lambda x: (2.5*x)*(1-x), 0.6, 20)) == 20
     """
     
-    # Initialize the orbit with x0
+    # Initialize the orbit with x0 and x1
     orbit = [x0, fn(float(x0), *args)]
     
     # Iterate until t == T
@@ -67,7 +67,6 @@ def fixed_point(fn, x0, args=(), xtol=1e-8, maxiter=500):
     I didn't want a full scipy dependency, instead this requires only
     numpy.
     ----
-
 
     Find a fixed point of the function.
 
@@ -152,7 +151,7 @@ def is_stable(fn, xfix, ep, args=(), xtol=1e-4, maxiter=500):
     args : tuple, optional
         Extra arguments to `fn`.
     xtol : float, optional
-        Convergence tolerance, defaults to 1e-08.
+        Convergence tolerance, defaults to 1e-04.
     maxiter : int, optional
         Maximum number of iterations, defaults to 500.
     """
@@ -185,7 +184,7 @@ def phase_diagram(xfix=(), xstable=(), size=60, offset=12):
     xstable : tuple (of tuples)
         Boolean stability tuples (from is_stable())
     size : int (size > 20)
-        Width of the line in charaters
+        Width of the phase line in characters
     offset : int (offset > 2; size*.1 < offset < size*.25)
         Min/max offset of fixed points on the line
     """
