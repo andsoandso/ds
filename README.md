@@ -11,6 +11,7 @@ This code requires [numpy](http://www.numpy.org/) which can be (easily) installe
 
 This module is tested on OS 10.9, python 2.7.4, numpy 1.6.1, but should work on any recent unix-like system just fine; Let me know if that is not the case.  If you use windows I'd take patches but have no interesting in testing or supporting.  Windows, well, it just makes me sad.
 
+
 Intro
 =====
 

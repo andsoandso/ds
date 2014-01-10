@@ -66,6 +66,9 @@ def fixed_point(fn, x0, args=(), xtol=1e-8, maxiter=500):
 
     I didn't want a full scipy dependency, instead this requires only
     numpy.
+
+    NOTE: For consistency with other functions in thie module, x0 must be float not array-like as in the scipy version.  Use a list 
+        comprehension to search many seeds.
     ----
 
     Find a fixed point of the function.
@@ -77,7 +80,7 @@ def fixed_point(fn, x0, args=(), xtol=1e-8, maxiter=500):
     ----------
     fn : function
         A function whose first argument is x
-    x0 : array_like
+    x0 : float
         Fixed point of function.
     args : tuple, optional
         Extra arguments to `func`.
@@ -96,41 +99,28 @@ def fixed_point(fn, x0, args=(), xtol=1e-8, maxiter=500):
     >>> from scipy import optimize
     >>> def func(x, c1, c2):
     ....    return np.sqrt(c1/(x+c2))
-    >>> c1 = np.array([10,12.])
-    >>> c2 = np.array([3, 5.])
-    >>> optimize.fixed_point(func, [1.2, 1.3], args=(c1,c2))
-    array([ 1.4920333 ,  1.37228132])
+    >>> c1 = 10
+    >>> c2 = 2
+    >>> optimize.fixed_point(func, 1.2, args=(c1,c2))
+    1.6542491578567586
     """
-
-    if not np.isscalar(x0):
-        x0 = np.asarray(x0)
-        p0 = x0
-        for iter in range(maxiter):
-            p1 = fn(p0, *args)
-            p2 = fn(p1, *args)
-            d = p2 - 2.0 * p1 + p0
-            p = np.where(d == 0, p2, p0 - (p1 - p0)*(p1 - p0) / d)
-            relerr = np.where(p0 == 0, p, (p-p0)/p0)
-            if np.all(np.abs(relerr) < xtol):
-                return p
-            p0 = p
-    else:
-        p0 = x0
-        for iter in range(maxiter):
-            p1 = fn(p0, *args)
-            p2 = fn(p1, *args)
-            d = p2 - 2.0 * p1 + p0
-            if d == 0.0:
-                return p2
-            else:
-                p = p0 - (p1 - p0)*(p1 - p0) / d
-            if p0 == 0:
-                relerr = p
-            else:
-                relerr = (p - p0)/p0
-            if np.abs(relerr) < xtol:
-                return p
-            p0 = p
+    
+    p0 = x0
+    for iter in range(maxiter):
+        p1 = fn(p0, *args)
+        p2 = fn(p1, *args)
+        d = p2 - 2.0 * p1 + p0
+        if d == 0.0:
+            return p2
+        else:
+            p = p0 - (p1 - p0)*(p1 - p0) / d
+        if p0 == 0:
+            relerr = p
+        else:
+            relerr = (p - p0)/p0
+        if np.abs(relerr) < xtol:
+            return p
+        p0 = p
 
     msg = "Failed to converge after {0} iterations, value is {0}".format(
             maxiter, p)
