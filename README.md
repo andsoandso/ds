@@ -43,7 +43,7 @@ Iterate our function
 Find the fixed pointsi seeding from [-1, -.1, 0.01, .5, 1].
 
         >>> from ds.fn import fixed_points
-        >>> set(dis.fn.fixed_point(lambda x: (2.5*x)*(1-x), [-1, -.1, 0.01, .5, 1]))
+        >>> set([dis.fn.fixed_point(lambda x: (2.5*x)*(1-x), xs) for xs in [-1, -.1, 0.01, .5, 1]])
         set([0.0, 0.60000000000000009])
 
 Are they stable (within a neighborhood of 0.1)?
