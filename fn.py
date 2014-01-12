@@ -134,7 +134,7 @@ def is_stable(fn, xfix, ep, args=(), xtol=1e-4, maxiter=500):
     Parameters
     ----------
     fn : function
-        A function that takes a single argument
+        A function whose first argument is x
     xfix : float
         The fixed point 
     ep : float
