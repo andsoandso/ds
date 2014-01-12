@@ -67,8 +67,9 @@ def fixed_point(fn, x0, args=(), xtol=1e-8, maxiter=500):
     I didn't want a full scipy dependency, instead this requires only
     numpy.
 
-    NOTE: For consistency with other functions in thie module, x0 must be float not array-like as in the scipy version.  Use a list 
-        comprehension to search many seeds.
+    NOTE: For consistency with other functions in thie module, 
+        x0 must be float not array-like as in the scipy version.  
+        Use a list comprehension to search many seeds.
     ----
 
     Find a fixed point of the function.
