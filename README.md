@@ -59,7 +59,7 @@ Are they stable (within a neighborhood of 0.1)?
 
 Print a pretty phase diagram to the console.
 
-        >>> from ds.discrete import phase_diagram
+        >>> from ds.vis import phase_diagram
         >>> phase_diagram((0,.6), ((False, False), (True, True)))
 
         ------<-----*----------->-----*-----<-----------------------
