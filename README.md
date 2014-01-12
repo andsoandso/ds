@@ -21,7 +21,7 @@ Some quick examples of use.  Let's examine the function `2.5x(1-x)`.
 
 Iterate our function
 
-        >>> from ds.fn import iterate
+        >>> from ds.discrete import iterate
         >>> iterate(lambda x: (2.5*x)*(1-x), 0.6, 5)
         [0.6000000000000001, 0.6, 0.6000000000000001, 0.6, 0.6000000000000001]
 
@@ -44,13 +44,13 @@ Iterate our function
 
 Find the fixed pointsi seeding from [-1, -.1, 0.01, .5, 1].
 
-        >>> from ds.fn import fixed_points
+        >>> from ds.discrete import fixed_points
         >>> set([dis.fn.fixed_point(lambda x: (2.5*x)*(1-x), xs) for xs in [-1, -.1, 0.01, .5, 1]])
         set([0.0, 0.60000000000000009])
 
 Are they stable (within a neighborhood of 0.1)?
         
-        >>> from ds.fn import is_stable
+        >>> from ds.discrete import is_stable
         >>> is_stable(lambda x: (2.5*x)*(1-x), 0, 0.1)
         (False, False)
 
@@ -59,7 +59,7 @@ Are they stable (within a neighborhood of 0.1)?
 
 Print a pretty phase diagram to the console.
 
-        >>> from ds.fn import phase_diagram
+        >>> from ds.discrete import phase_diagram
         >>> phase_diagram((0,.6), ((False, False), (True, True)))
 
         ------<-----*----------->-----*-----<-----------------------
