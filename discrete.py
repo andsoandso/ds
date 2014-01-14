@@ -46,11 +46,11 @@ def iterate(fn, x0, T, args=()):
     >>> assert len(ds.fn.iterate(lambda x: (2.5*x)*(1-x), 0.6, 20)) == 20
     """
     
-    # Initialize the orbit with x0 and x1
-    orbit = [x0, fn(float(x0), *args)]
+    # Initialize the orbit with x0 
+    orbit = [x0, ]
     
     # Iterate until t == T
-    for t in range(1, int(T)):
+    for t in range(0, int(T)):
         xt = fn(orbit[t - 1], *args)
         orbit.append(xt)
         
