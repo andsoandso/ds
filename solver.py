@@ -1,4 +1,4 @@
-"""My for attempts at ODE solvers.... Use scipy, man, use scipy!"""
+"""Bad ODE solvers.... Use scipy man, use scipy!"""
 
 
 def euler(deltat, deriv, x, t, deriv_args=()):
