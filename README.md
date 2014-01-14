@@ -1,7 +1,7 @@
 ds
 ==
 
-A python module for dynamical systems analysis.  It's for learning not for real work.
+A python module for 1d dynamical systems analysis.  It's for learning not for real work.
 
 To install download the zip of this code to somewhere on your python path, or likewise `git clone https://github.com/andsoandso/ds.git` into your python path. As it is undergoing frequent updates, the git solution is the convenient one.
 
