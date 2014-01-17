@@ -23,7 +23,7 @@ def phase_diagram(xfix=(), xstable=(), size=60, offset=12):
     
     # Set some (hopefully) sane display limits
     if len(xfix) != len(xstable):
-        raise ValueError("xfix and xstable must have same number of elements")
+        raise ValueError("xfix and xstable must match")
     if size < 20:
         raise ValueError("size must be greater than 20")
     if offset/float(size) < 0.1:
