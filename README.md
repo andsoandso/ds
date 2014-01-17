@@ -14,8 +14,9 @@ Requirements aside, this module is most easily used inside [ipython](http://ipyt
 This module is tested on OS 10.9, python 2.7.4, numpy 1.6.1, but should work on any recent unix-like system just fine; Let me know if that is not the case.  If you use windows I'd take patches but have no interesting in testing or supporting.  Windows, well, it just makes me sad.
 
 
-Intro
-=====
+# Intro
+
+## In discrete time
 
 Some quick examples of use.  Let's examine the function `2.5x(1-x)`.
 
@@ -66,3 +67,32 @@ Print a pretty phase diagram to the console.
                     0                 0.6
 
 
+## In continuous time
+
+The beginnings of a continuous time branch.  Unlike discrete, this branch uses the fn of interest derivative.  The API though, and the signatures, are really similar to their discrete time equivalents.
+
+Iterate...
+
+        >>> from ds.continuous import iterate
+	    >>> iterate(lambda x: 0.2*(20-x), 1, 20, (), 
+	    ....        partial(solver.euler, 2.0))
+		[1, 8.600000000000001, 8.600000000000001, 13.16, 13.16, 15.896, 15.896, 17.5376, 17.5376, 18.522560000000002, 18.522560000000002, 19.113536, 19.113536, 19.4681216, 19.4681216, 19.68087296, 19.68087296, 19.808523775999998, 19.808523775999998, 19.8851142656, 19.8851142656]
+				
+
+		
+We know a stable point for `lambda x: 0.2*(20-x)` is 20.  Is it stable?
+
+		>>> is_stable(lambda x: 0.2*(20-x), 20, 0.1, 
+        ....		args=(), xtol=1e-4, maxiter=500, 
+        ....		solverfn=partial(solver.euler, 2.0)) 
+		(True, True)
+
+Print a pretty phase diagram to the console.
+
+		>>> phase_diagram(xfix=(20.0,), xstable=((True, True), ), size=60, offset=12)
+
+
+		------>-----*-----<-----------------------------------------
+		            20.0
+
+		
