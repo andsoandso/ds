@@ -74,9 +74,11 @@ def is_stable(deriv, xfix, ep, args=(), xtol=1e-4, maxiter=500, solverfn=None):
 
 
 if __name__ == '__main__':
+    """Runs some simple sanity checks"""
     from functools import partial
     from ds import solver
-
+    from ds.vis import phase_diagram
+    
     print("Testing `iterate()`")
     print("\n")    
     
@@ -109,7 +111,8 @@ if __name__ == '__main__':
     assert stab == (True, True), "`is_stable()` is off."
     print("\n")
     
-    print("The matching phase line.")
-    from ds.vis import phase_diagram
-    phase_diagram(xfix=20.0, xstable=stab, size=60, offset=12)
+    print("The corresponding phase line for `lambda x: 0.2*(20-x)`" 
+            " seeded at 20.")
+
+    phase_diagram(xfix=(20.0,), xstable=(stab, ), size=60, offset=12)
     
