@@ -69,11 +69,14 @@ Print a pretty phase diagram to the console.
 
 ## In continuous time
 
-The beginnings of a continuous time branch.  Unlike discrete, this branch uses the fn of interest derivative.  The API though, and the signatures, are really similar to their discrete time equivalents.
+The beginnings of a continuous time branch.  Unlike discrete, this branch uses the fn of interest's derivative.  The API and the signatures are similar to their discrete time equivalents.
 
-Iterate...
+I also introduce the `solver` submodule for solving differential equations.  To use the PFA (partial function application) should be used to normalize their signature to `solver(deriv, t, deriv_args=()))`.  For example, the raw signature for `ds.solver.euler` is `euler(deltat, deriv, t, deriv_args=())` but we do `partial(solver.euler, 2.0)` to normalize it to match the `solver()` signature above.  For more on (partial)[http://docs.python.org/2/library/functools.html#functools.partial]
+
+Iterate the temperature equilibration differential eq `lambda x: 0.2*(20-x)` with a room temperature of 20.
 
         >>> from ds.continuous import iterate
+		>>> from functools import partial
 	    >>> iterate(lambda x: 0.2*(20-x), 1, 20, (), 
 	    ....        partial(solver.euler, 2.0))
 		[1, 8.600000000000001, 8.600000000000001, 13.16, 13.16, 15.896, 15.896, 17.5376, 17.5376, 18.522560000000002, 18.522560000000002, 19.113536, 19.113536, 19.4681216, 19.4681216, 19.68087296, 19.68087296, 19.808523775999998, 19.808523775999998, 19.8851142656, 19.8851142656]
