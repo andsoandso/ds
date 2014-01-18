@@ -83,7 +83,7 @@ Iterate the temperature equilibration differential eq `lambda x: 0.2*(20-x)` wit
 				
 
 		
-We know a stable point for `lambda x: 0.2*(20-x)` is 20.  Is it stable?
+We know a fixed point for `lambda x: 0.2*(20-x)` is 20.  Is it stable?
 
 		>>> is_stable(lambda x: 0.2*(20-x), 20, 0.1, 
         ....		args=(), xtol=1e-4, maxiter=500, 
