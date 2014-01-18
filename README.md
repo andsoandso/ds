@@ -43,13 +43,13 @@ Iterate our function
         >>> iterate(lambda x: (2.5*x)*(1-x), -.1, 5)
         [-0.275, -0.8765624999999999, -4.1123107910156245, -52.558527082297935, -7037.393240357359] 
 
-Find the fixed pointsi seeding from [-1, -.1, 0.01, .5, 1].
+Find fixed pointsi seeding from [-1, -.1, 0.01, .5, 1].
 
         >>> from ds.discrete import fixed_points
         >>> set([dis.fn.fixed_point(lambda x: (2.5*x)*(1-x), xs) for xs in [-1, -.1, 0.01, .5, 1]])
         set([0.0, 0.60000000000000009])
 
-Are they stable (within a neighborhood of 0.1)?
+Are they stable? The neighborhood is 0.1.
         
         >>> from ds.discrete import is_stable
         >>> is_stable(lambda x: (2.5*x)*(1-x), 0, 0.1)
@@ -58,7 +58,7 @@ Are they stable (within a neighborhood of 0.1)?
         >>> is_stable(lambda x: (2.5*x)*(1-x), 0, 0.1)
         (True, True)
 
-Print a pretty phase diagram to the console.
+Print a pretty phase diagram.
 
         >>> from ds.vis import phase_diagram
         >>> phase_diagram((0,.6), ((False, False), (True, True)))
@@ -94,7 +94,7 @@ We know a fixed point for `lambda x: 0.2*(20-x)` is 20.  Is it stable?
         ....		solverfn=partial(solver.euler, 2.0)) 
 		(True, True)
 
-Print a pretty phase diagram to the console.
+Print a pretty phase diagram.
 
 		>>> phase_diagram(xfix=(20.0,), xstable=((True, True), ), size=60, offset=12)
 
