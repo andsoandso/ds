@@ -1,5 +1,5 @@
-ds
-==
+# ds
+
 
 A python module for 1d dynamical systems analysis.  It's for learning not for real work.
 
@@ -85,15 +85,13 @@ Iterate the temperature equilibration differential eq `lambda x: 0.2*(20-x)` wit
 	    ....        partial(solver.euler, 2.0))
 		[1, 8.600000000000001, 8.600000000000001, 13.16, 13.16, 15.896, 15.896, 17.5376, 17.5376, 18.522560000000002, 18.522560000000002, 19.113536, 19.113536, 19.4681216, 19.4681216, 19.68087296, 19.68087296, 19.808523775999998, 19.808523775999998, 19.8851142656, 19.8851142656]
 				
-
-		
 We know a fixed point for `lambda x: 0.2*(20-x)` is 20.  Is it stable?
-
+		
 		>>> is_stable(lambda x: 0.2*(20-x), 20, 0.1, 
         ....		args=(), xtol=1e-4, maxiter=500, 
         ....		solverfn=partial(solver.euler, 2.0)) 
 		(True, True)
-
+		
 Print a pretty phase diagram.
 
 		>>> phase_diagram(xfix=(20.0,), xstable=((True, True), ), size=60, offset=12)
