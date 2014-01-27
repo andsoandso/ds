@@ -165,3 +165,42 @@ def is_stable(fn, xfix, ep, args=(), xtol=1e-4, maxiter=500):
     return (p, m)
 
 
+def is_oscillator(fn, x0, period, args=(), xtol=1e-4, maxiter=500):
+    """Does fn converge to an oscillatory pattern, and what is the period?
+    
+    NOTE: I made this up on the fly, no idea how reliable this simplistic
+    method of detection orbits would be in practice.  User beware.
+    
+    Parameters
+    ----------
+    fn : function
+        A function whose first argument is x
+    x0 : float
+        Initial condition/seed
+    period : int
+        `0:period` values are searched looking for oscillatory behavoir
+    args : tuple, optional
+        Extra arguments to `fn`.
+    xtol : float, optional
+        Convergence tolerance, defaults to 1e-04.
+    maxiter : int, optional
+        Maximum number of iterations, defaults to 500.
+    """
+    
+    x0 = float(x0)
+    period = int(period)
+    
+    xts = np.asarray(iterate(fn, x0, maxiter, *args))[-(period*2)+1:]
+        ## truncate the orbit, keeping only 2 times the period range
+        ## as it is all we need.
+        
+    for i in range(1,period+1):
+        if np.all(np.abs(xts[0:i+1] - xts[i:(i+i+1)]) < xtol):
+            return (True, i)
+
+    return (False, 0)
+    
+
+if __name__ == '__main__':
+    from functools import partial
+    assert (is_oscillator(partial(lambda r, x: (r*x)*(1-x), 3.838), .1, 8)) == (True, 3)
