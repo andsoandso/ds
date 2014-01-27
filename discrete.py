@@ -165,7 +165,7 @@ def is_stable(fn, xfix, ep, args=(), xtol=1e-4, maxiter=500):
     return (p, m)
 
 
-def is_oscillator(fn, x0, period, args=(), xtol=1e-4, maxiter=500):
+def is_oscillator(fn, x0, args=(), xtol=1e-4, maxiter=500):
     """Does fn converge to an oscillatory pattern, and what is the period?
     
     NOTE: I made this up on the fly, no idea how reliable this simplistic
@@ -177,8 +177,6 @@ def is_oscillator(fn, x0, period, args=(), xtol=1e-4, maxiter=500):
         A function whose first argument is x
     x0 : float
         Initial condition/seed
-    period : int
-        `0:period` values are searched looking for oscillatory behavoir
     args : tuple, optional
         Extra arguments to `fn`.
     xtol : float, optional
@@ -190,11 +188,11 @@ def is_oscillator(fn, x0, period, args=(), xtol=1e-4, maxiter=500):
     x0 = float(x0)
     period = int(period)
     
-    xts = np.asarray(iterate(fn, x0, maxiter, *args))[-(period*2)+1:]
+    xts = np.asarray(iterate(fn, x0, maxiter, *args))
         ## truncate the orbit, keeping only 2 times the period range
         ## as it is all we need.
     
-    for i in range(1,period+1):
+    for i in range(1, floor(xts.shape[0]/2.0)):
         if np.abs(xts[0] - xts[i]) < xtol:
             return (True, i)
 
