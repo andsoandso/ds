@@ -183,8 +183,17 @@ def is_oscillator(fn, x0, args=(), xtol=1e-4, maxiter=500, use=0.10):
         Convergence tolerance, defaults to 1e-04.
     maxiter : int, optional
         Maximum number of iterations, defaults to 500.  
-    use : float (0-1)
+    use : float, (0-1)
         The percent of maxiter to used to check for oscillatory activity. 
+        
+    Examples
+    --------
+    >>> is_oscillator(partial(lambda r, x: (r*x)*(1-x), 3.838), .1))
+    (True, 3)
+    
+    >>> # A fixed point is a period 1 oscillator
+    >>> (is_oscillator(partial(lambda r, x: (r*x)*(1-x), 2.1), .1))
+    (True, 1)
     """
     
     x0 = float(x0)
