@@ -165,7 +165,7 @@ def is_stable(fn, xfix, ep, args=(), xtol=1e-4, maxiter=500):
     return (p, m)
 
 
-def is_oscillator(fn, x0, args=(), xtol=1e-4, maxiter=500):
+def is_oscillator(fn, x0, args=(), xtol=1e-4, maxiter=500, use=0.10):
     """Does fn converge to an oscillatory pattern, and what is the period?
     
     NOTE: I made this up on the fly, no idea how reliable this simplistic
@@ -182,14 +182,16 @@ def is_oscillator(fn, x0, args=(), xtol=1e-4, maxiter=500):
     xtol : float, optional
         Convergence tolerance, defaults to 1e-04.
     maxiter : int, optional
-        Maximum number of iterations, defaults to 500.  The last 10%
-        of this value are used to check for oscillatory activity.  Keep
-        it large.
+        Maximum number of iterations, defaults to 500.  
+    use : float (0-1)
+        The percent of maxiter to used to check for oscillatory activity. 
     """
     
     x0 = float(x0)
+    if (use > 1) or (use < 0):
+        raise ValueError("use must be between 0-1")
     
-    xts = np.asarray(iterate(fn, x0, maxiter, *args))[-(maxiter * 0.10):]
+    xts = np.asarray(iterate(fn, x0, maxiter, *args))[-(maxiter * use):]
     
     maxperiod = int(np.floor(xts.shape[0]/2.0))
     for i in range(1, maxperiod):
