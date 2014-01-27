@@ -182,17 +182,17 @@ def is_oscillator(fn, x0, args=(), xtol=1e-4, maxiter=500):
     xtol : float, optional
         Convergence tolerance, defaults to 1e-04.
     maxiter : int, optional
-        Maximum number of iterations, defaults to 500.
+        Maximum number of iterations, defaults to 500.  The last 10%
+        of this value are used to check for oscillatory activity.  Keep
+        it large.
     """
     
     x0 = float(x0)
-    period = int(period)
     
-    xts = np.asarray(iterate(fn, x0, maxiter, *args))
-        ## truncate the orbit, keeping only 2 times the period range
-        ## as it is all we need.
+    xts = np.asarray(iterate(fn, x0, maxiter, *args))[(maxiter * 0.10):]
     
-    for i in range(1, floor(xts.shape[0]/2.0)):
+    maxperiod = int(np.floor(xts.shape[0]/2.0))
+    for i in range(1, maxperiod):
         if np.abs(xts[0] - xts[i]) < xtol:
             return (True, i)
 
@@ -203,9 +203,9 @@ if __name__ == '__main__':
     from functools import partial
     
     print("Testing is_oscillator()...")
-    assert (is_oscillator(partial(lambda r, x: (r*x)*(1-x), 3.838), .1, 8)) == (True, 3)
-    assert (is_oscillator(partial(lambda r, x: (r*x)*(1-x), 4.0), .1, 8)) == (False, 0)
-    assert (is_oscillator(partial(lambda r, x: (r*x)*(1-x), 2.1), .1, 8)) == (True, 1)
+    assert (is_oscillator(partial(lambda r, x: (r*x)*(1-x), 3.838), .1)) == (True, 3)
+    assert (is_oscillator(partial(lambda r, x: (r*x)*(1-x), 4.0), .1)) == (False, 0)
+    assert (is_oscillator(partial(lambda r, x: (r*x)*(1-x), 2.1), .1)) == (True, 1)
     print("Done")
     
     
