@@ -18,7 +18,7 @@ This module is tested on OS 10.9, python 2.7.4, numpy 1.6.1, but should work on 
 
 ## In discrete time
 
-Some quick examples of use.  Let's examine the function `2.5x(1-x)`.
+Some quick examples of use.  Let's examine the function `2.5x(1-x)`, a logistic equation with a rate of 2.5.
 
 Iterate our function
 
@@ -43,7 +43,7 @@ Iterate our function
         >>> iterate(lambda x: (2.5*x)*(1-x), -.1, 5)
         [-0.275, -0.8765624999999999, -4.1123107910156245, -52.558527082297935, -7037.393240357359] 
 
-Find fixed pointsi seeding from [-1, -.1, 0.01, .5, 1].
+Find fixed points seeding from [-1, -.1, 0.01, .5, 1].
 
         >>> from ds.discrete import fixed_points
         >>> set([dis.fn.fixed_point(lambda x: (2.5*x)*(1-x), xs) for xs in [-1, -.1, 0.01, .5, 1]])
@@ -67,15 +67,32 @@ Print a pretty phase diagram.
                     0                 0.6
 
 
+## (More) fun iterating the logistic equation
+
+Still using discrete maths. The general logistic function is `(r*x)*(1-x)`, implemented here using a lambda, with the parameters ordered so we can use partial.
+
+[Partial](http://docs.python.org/2/library/functools.html#functools.partial) info.
+
+The rate is 3.1, seed is 0.1
+
+		>>> from functools import partial
+		>>> iterate(partial(lambda r, x: (r*x)*(1-x), 3.1), 0.1, 5)
+		[0.1, 0.2790000000000001, 0.6235929, 0.727646864715729, 0.6143484054538055]
+		
+Or to clean things up a bit
+
+		>>> rate = 3.1; x0 = 0.1; iterate(partial(lambda r, x: (r*x)*(1-x), rate), x0, 5)
+		[0.1, 0.2790000000000001, 0.6235929, 0.727646864715729, 0.6143484054538055]
+				
+		
+
 ## In continuous time
 
 Unlike discrete, this branch uses the fn of interest's derivative.  The API and the signatures are similar to their discrete time equivalents.
 
-I also introduce the `solver` submodule for solving differential equations.  To use, PFA (partial function application) should be used to normalize their signature to `solver(deriv, t, deriv_args=()))`.  
+I also introduce the `solver` submodule for solving differential equations.  To use solverfns, PFA (partial function application) should be used to normalize their signature to `solverfn(deriv, t, deriv_args=()))`.  
 
-The raw signature for `ds.solver.euler` is `euler(deltat, deriv, t, deriv_args=())` but we do `partial(solver.euler, 2.0)` to normalize it to match the `solver()` signature.  It sets the time-step to 2.  
-
-[Partial](http://docs.python.org/2/library/functools.html#functools.partial) info.
+The raw signature for `ds.solver.euler` is `euler(deltat, deriv, t, deriv_args=())` but we do `partial(solver.euler, 2.0)` to normalize it to match the `solver()` signature. It sets the time-step to 2.  
 
 Iterate the temperature equilibration differential eq `lambda x: 0.2*(20-x)` with a room temperature of 20.
 
@@ -100,4 +117,3 @@ Print a pretty phase diagram.
 		------>-----*-----<-----------------------------------------
 		            20.0
 
-		

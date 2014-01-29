@@ -1,3 +1,4 @@
+from math import sqrt, log, abs
 import numpy as np
 
 
@@ -57,6 +58,64 @@ def iterate(fn, x0, T, args=()):
     return orbit
 
 
+def lyapunov(fn, x0, args=(), d0=1e-9, maxiter=1000, mean_est=True):
+    """Estimate the lyapunov exponent (in base e). 
+    
+    Note: adapted from the algorithm described in
+    http://sprott.physics.wisc.edu/chaos../lyapexp.htm
+    
+    It seems to work ok, but I promise nothing. If you know
+    more about this, or there is some more correct way to do
+    this, please let me know (ejp30@pitt.edu).
+    
+    Parameters
+    ----------
+    fn : function
+        A function whose first argument is x
+    x0 : float
+        Initial condition/seed 
+    d0 : float
+        Intial distance, defaults to 1e-9
+    maxiter : int
+        The number of iterations to use in the estimate
+    mean_est : bool
+        Return the mean estimate (True) or a list of 
+        all (maxiter) estimates (False).
+        
+    Examples
+    --------
+    TODO
+    """
+    
+    lambda_est = []
+    maxiter = int(maxiter)
+
+    # Init, iter 1
+    xa = iterate(fn, x0, maxiter, *args)[-1]    ## Use maxiter for xa init too
+    xb = iterate(fn, xa + d0, 1, *args)[0]      ## xa preturbed by d0 is xb
+    d1 = sqrt((xa - xb) ** 2)                   ## find euclidian distance
+    lambda_est.append(log(abs(d1 / d0)))        ## First lyapunov estimate
+    
+    for i in range(1, maxiter):
+        # Move xb
+        xb = xa + (d0 * (xb - xa)) / d1
+        
+        # Advance
+        xa = iterate(fn, xa, 1, *args)[0]
+        xb = iterate(fn, xb, 1, *args)[0]
+        
+        # New d1
+        d1 = sqrt((xa - xb) ** 2)
+        
+        # Store this iters est
+        lambda_est.append(log(abs(d1 / d0)))
+    
+    if mean_est:
+        return np.mean(lambda_est)
+    else:
+        return lambda_est
+
+    
 def fixed_point(fn, x0, args=(), xtol=1e-8, maxiter=500):
     """
     ----
