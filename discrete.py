@@ -58,8 +58,8 @@ def iterate(fn, x0, T, args=()):
     return orbit
 
 
-def lyapunov(fn, x0, args=(), d0=1e-9, maxiter=1000, mean_est=True):
-    """Estimate the lyapunov exponent (in base e). 
+def lyapunov(fn, x0, args=(), d0=1e-9, maxiter=1000, sumfn=None, logfn=None):
+    """Estimate the lyapunov exponent (defaults to base e). 
     
     Note: adapted from the algorithm described in
     http://sprott.physics.wisc.edu/chaos../lyapexp.htm
@@ -76,16 +76,32 @@ def lyapunov(fn, x0, args=(), d0=1e-9, maxiter=1000, mean_est=True):
         Initial condition/seed 
     d0 : float
         Intial distance, defaults to 1e-9
-    maxiter : int
+    maxiter : int, optional
         The number of iterations to use in the estimate
-    mean_est : bool
-        Return the mean estimate (True) or a list of 
-        all (maxiter) estimates (False).
+    sumfn : None, or function, defaults to mean
+        If a function is provided it is used to summarize
+        each iterations lyapunov estimate. 
         
+        The passed sumfn should only require a single argument -
+        the 1d numeric data to be operated on.
+        
+        Note: If you want the all the estimates sans summary
+        use an identity function, i.e. `sumfn = lambda x: x`.
+    logfn : None or function, defaults to log (base e)
+        If a function is provided it is used instead of log.  
+        The passed logfn should only require a single argument -
+        the 1d numeric data to be operated on.
+    
     Examples
     --------
     TODO
     """
+    
+    if logfn is None:
+        logfn = log
+    
+    if sumfn is None:
+        sumfn = np.mean
     
     lambda_est = []
     maxiter = int(maxiter)
@@ -94,7 +110,7 @@ def lyapunov(fn, x0, args=(), d0=1e-9, maxiter=1000, mean_est=True):
     xa = iterate(fn, x0, maxiter, *args)[-1]    ## Use maxiter for xa init too
     xb = iterate(fn, xa + d0, 1, *args)[0]      ## xa preturbed by d0 is xb
     d1 = sqrt((xa - xb) ** 2)                   ## find euclidian distance
-    lambda_est.append(log(abs(d1 / d0)))        ## First lyapunov estimate
+    lambda_est.append(logfn(abs(d1 / d0)))      ## First lyapunov estimate
     
     for i in range(1, maxiter):
         # Move xb
@@ -108,12 +124,10 @@ def lyapunov(fn, x0, args=(), d0=1e-9, maxiter=1000, mean_est=True):
         d1 = sqrt((xa - xb) ** 2)
         
         # Store this iters est
-        lambda_est.append(log(abs(d1 / d0)))
+        lambda_est.append(logfn(abs(d1 / d0)))
     
-    if mean_est:
-        return np.mean(lambda_est)
-    else:
-        return lambda_est
+    return sumfn(lambda_est)
+
 
     
 def fixed_point(fn, x0, args=(), xtol=1e-8, maxiter=500):
